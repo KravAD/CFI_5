@@ -24,6 +24,10 @@ public class InterfazUsuario extends JFrame{
         JPanel northPanel = new JPanel(new FlowLayout());
         JPanel southPanel = new JPanel(new FlowLayout());
 
+        JTextArea textArea = new JTextArea(10, 30);
+        JScrollPane scrollPane = new JScrollPane(textArea); 
+
+
 
         JButton botonContarGenes = new JButton("Contar Genes");
         JButton botonCalcularCombinaciones = new JButton("Calcular Combinaciones");
@@ -73,6 +77,7 @@ public class InterfazUsuario extends JFrame{
 
         panel.add(northPanel, BorderLayout.NORTH);
         panel.add(southPanel, BorderLayout.SOUTH);
+        panel.add(scrollPane, BorderLayout.CENTER);
 
 
         this.add(panel);
