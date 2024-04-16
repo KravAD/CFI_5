@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class InterfazUsuario extends JFrame{
@@ -15,6 +16,8 @@ public class InterfazUsuario extends JFrame{
     private SumYListaNum sumYListaNum;
     private PotenciasMaximos potenciasMaximos;
     private OrdenarLineas ordenarLineas;
+    private Buscar buscar;
+
 
     private String dna = "ATGCGTATGAGCTAGCTAGCATG";
     private String gen1 = "ATG";
@@ -26,6 +29,7 @@ public class InterfazUsuario extends JFrame{
         sumYListaNum = new SumYListaNum();
         potenciasMaximos = new PotenciasMaximos();
         ordenarLineas = new OrdenarLineas();
+        buscar = new Buscar();
 
         JPanel panel = new JPanel(new BorderLayout());
         JPanel northPanel = new JPanel(new FlowLayout());
@@ -39,6 +43,7 @@ public class InterfazUsuario extends JFrame{
         JButton botonSumYListaNum = new JButton("SumYListaNum");
         JButton botonPotenciasMaximos = new JButton("PotenciasMaximos");
         JButton botonOrdenarLineas = new JButton("Ordenar Lineas");
+        JButton botonBuscar = new JButton("Buscar");
 
         botonContarGenes.addActionListener(new ActionListener() {
             @Override
@@ -80,10 +85,24 @@ public class InterfazUsuario extends JFrame{
                 JOptionPane.showMessageDialog(null, "Las líneas del texto han sido ordenadas alfabéticamente.");
             }
         });
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String palabraBuscada = JOptionPane.showInputDialog("Ingrese la palabra que desea buscar:");
+                String textoCompleto = textArea.getText();
+                boolean encontrado = Buscar.busquedaBinaria(textoCompleto, palabraBuscada);
+                if (encontrado) {
+                    JOptionPane.showMessageDialog(null, "La palabra '" + palabraBuscada + "' fue encontrada.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "La palabra '" + palabraBuscada + "' no fue encontrada.");
+                }
+            }
+        });
 
         northPanel.add(botonContarGenes);
         northPanel.add(botonCalcularCombinaciones);
         northPanel.add(botonOrdenarLineas);
+        northPanel.add(botonBuscar);
 
         southPanel.add(botonSumYListaNum);
         southPanel.add(botonPotenciasMaximos);
