@@ -25,7 +25,7 @@ public class InterfazUsuario extends JFrame{
         JPanel southPanel = new JPanel(new FlowLayout());
 
         JTextArea textArea = new JTextArea(10, 30);
-        JScrollPane scrollPane = new JScrollPane(textArea); 
+        JScrollPane scrollPane = new JScrollPane(textArea);
 
 
 
