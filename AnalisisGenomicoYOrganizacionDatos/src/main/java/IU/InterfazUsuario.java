@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class InterfazUsuario extends JFrame{
     private ContadorGenes contadorGenes;
@@ -18,6 +20,8 @@ public class InterfazUsuario extends JFrame{
     private PotenciasMaximos potenciasMaximos;
     private OrdenarLineas ordenarLineas;
     private Buscar buscar;
+    private GestionExperimento gestionExperimento;
+
 
 
     private String dna = "ATGCGTATGAGCTAGCTAGCATG";
@@ -31,6 +35,7 @@ public class InterfazUsuario extends JFrame{
         potenciasMaximos = new PotenciasMaximos();
         ordenarLineas = new OrdenarLineas();
         buscar = new Buscar();
+        gestionExperimento = new GestionExperimento();
 
         JPanel panel = new JPanel(new BorderLayout());
         JPanel northPanel = new JPanel(new FlowLayout());
@@ -45,6 +50,9 @@ public class InterfazUsuario extends JFrame{
         JButton botonPotenciasMaximos = new JButton("PotenciasMaximos");
         JButton botonOrdenarLineas = new JButton("Ordenar Lineas");
         JButton botonBuscar = new JButton("Buscar");
+        JButton botonAgregar = new JButton("Agregar Experimento");
+        JButton botonListar = new JButton("Listar Experimentos");
+
 
         botonContarGenes.addActionListener(new ActionListener() {
             @Override
@@ -99,11 +107,39 @@ public class InterfazUsuario extends JFrame{
                 }
             }
         });
+        botonAgregar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fechaStr = JOptionPane.showInputDialog("Ingrese la fecha del experimento (formato YYYY-MM-DD):");
+                String resultado = JOptionPane.showInputDialog("Ingrese el resultado del experimento:");
+                try {
+                    LocalDate fecha = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                    Experimento experimento = new Experimento(fecha, resultado);
+                    gestionExperimento.agregarExperimento(experimento);
+                    JOptionPane.showMessageDialog(null, "Experimento agregado exitosamente.");
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Fecha inválida. Por favor, ingrese la fecha en el formato correcto (YYYY-MM-DD).");
+                }
+            }
+        });
+
+        botonListar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuilder sb = new StringBuilder();
+                for (Experimento experimento : gestionExperimento.getExperimentosOrdenados()) {
+                    sb.append(experimento.getFecha()).append(": ").append(experimento.getResultado()).append("\n");
+                }
+                textArea.setText(sb.toString());
+            }
+        });
 
         northPanel.add(botonContarGenes);
         northPanel.add(botonCalcularCombinaciones);
         northPanel.add(botonOrdenarLineas);
         northPanel.add(botonBuscar);
+        northPanel.add(botonAgregar);
+        northPanel.add(botonListar);
 
         southPanel.add(botonSumYListaNum);
         southPanel.add(botonPotenciasMaximos);
