@@ -1,6 +1,7 @@
 package IU;
 import AnalisisGenomico.*;
 import AnalisisNumerico.*;
+import GestionInfo.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +14,18 @@ public class InterfazUsuario extends JFrame{
     private CalculoCombGeneticas calculoCombGeneticas;
     private SumYListaNum sumYListaNum;
     private PotenciasMaximos potenciasMaximos;
+    private OrdenarLineas ordenarLineas;
 
-    public InterfazUsuario(String dna, String gen1, String gen2) {
+    private String dna = "ATGCGTATGAGCTAGCTAGCATG";
+    private String gen1 = "ATG";
+    private String gen2 = "CGT";
+
+    public InterfazUsuario() {
         contadorGenes = new ContadorGenes();
         calculoCombGeneticas = new CalculoCombGeneticas();
         sumYListaNum = new SumYListaNum();
         potenciasMaximos = new PotenciasMaximos();
+        ordenarLineas = new OrdenarLineas();
 
         JPanel panel = new JPanel(new BorderLayout());
         JPanel northPanel = new JPanel(new FlowLayout());
@@ -27,13 +34,11 @@ public class InterfazUsuario extends JFrame{
         JTextArea textArea = new JTextArea(10, 30);
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-
-
         JButton botonContarGenes = new JButton("Contar Genes");
         JButton botonCalcularCombinaciones = new JButton("Calcular Combinaciones");
         JButton botonSumYListaNum = new JButton("SumYListaNum");
         JButton botonPotenciasMaximos = new JButton("PotenciasMaximos");
-
+        JButton botonOrdenarLineas = new JButton("Ordenar Lineas");
 
         botonContarGenes.addActionListener(new ActionListener() {
             @Override
@@ -50,6 +55,7 @@ public class InterfazUsuario extends JFrame{
                 JOptionPane.showMessageDialog(null, "Combinaciones genéticas: " + combinaciones);
             }
         });
+
         botonSumYListaNum.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,18 +73,24 @@ public class InterfazUsuario extends JFrame{
             }
         });
 
+        botonOrdenarLineas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ordenarLineas.ordenarLineas(textArea);
+                JOptionPane.showMessageDialog(null, "Las líneas del texto han sido ordenadas alfabéticamente.");
+            }
+        });
+
         northPanel.add(botonContarGenes);
         northPanel.add(botonCalcularCombinaciones);
-
+        northPanel.add(botonOrdenarLineas);
 
         southPanel.add(botonSumYListaNum);
         southPanel.add(botonPotenciasMaximos);
 
-
         panel.add(northPanel, BorderLayout.NORTH);
         panel.add(southPanel, BorderLayout.SOUTH);
         panel.add(scrollPane, BorderLayout.CENTER);
-
 
         this.add(panel);
         this.pack();
