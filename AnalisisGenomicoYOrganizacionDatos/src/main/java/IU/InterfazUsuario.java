@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class InterfazUsuario extends JFrame{
     private ContadorGenes contadorGenes;
     private CalculoCombGeneticas calculoCombGeneticas;
